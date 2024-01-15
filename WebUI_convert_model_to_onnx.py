@@ -5,41 +5,14 @@
 # https://www.youtube.com/channel/UCC8cMMvUfSYGndUfK7HgCsg
 # *****************************************
 
-# python WebUI_AMD_GPU.py -h  # show helps
-# Need to provide the path to the model folder(stable_diffusion_onnx). Example usage: 
-# python WebUI_AMD_GPU.py -m C:/Users/pentium/stable_diffusion_onnx
-
-# the goal: create the UI to make it easy for model convert:
-# ckpt to diffusers, 
-# safetensor to diffusers,
-# diffusers to onnx
-#            
-"""
-python convert_original_stable_diffusion_to_diffusers_repo.py --from_safetensors --checkpoint_path dreamshaper_332BakedVaeClipFix.safetensors  --dump_path dreamshaper_332BakedVaeClipFix_diffuser --original_config_file v1-inference.yaml   
-
-python convert_stable_diffusion_checkpoint_to_onnx_v1.1.py --model_path="dreamshaper_332BakedVaeClipFix_diffuser" --output_path="dreamshaper_332BakedVaeClipFix_onnx"
-"""
-
-# gradio                 3.15.0  -> 3.18.0        pip install -U gradio 
-# 1. template for file format convertion
-# 2. convert ckpt or safetensor to diffusers 
-#errors:
-#AttributeError: 'NoneType' object has no attribute 'replace'
-#Keyboard interruption in main thread... closing server.
-# TODO, download the latest convert script to folder and delete them afterwards?    for the results, show the absolute path for the resulted two folders? 
-## TODO, check if the two results folder existed. if do, give a warning. otherwise it will fail to run.  Done 
-## TODO, add discord server. Done
-## TODO, upgrade diffusers, and the create API for controlnet!   TODO on Ubuntu
-
 import gradio as gr
 from diffusers.pipelines.stable_diffusion.convert_from_ckpt import load_pipeline_from_original_stable_diffusion_ckpt
 import os 
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__)) 
 
-# test data: D:\WorkSpace\Downloaded_sd_models\deliberate_v11.ckpt
-
 def conertFn(inputfilepath,input_format,ori_model_version,extract_ema,to_safetensors): 
+    #print(inputfilepath,input_format,ori_model_version,extract_ema,to_safetensors)
     from_safetensors = False
     # an option to choose the original format, ckpt or safetensor. 
     
